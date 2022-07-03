@@ -3,7 +3,7 @@ const services = require('../services/loginServices');
 
 const loginRouter = express.Router();
 
-loginRouter.post('/', services.registerUser);
+loginRouter.post('/', services.login);
 
 module.exports = {
   loginRouter,
