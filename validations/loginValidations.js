@@ -1,26 +1,23 @@
 const MIN_PASSWORD_CHARACTERS = 6;
 
-const validateLogin = (res, email, password) => {
-  if (!email) return res.status(400).json({ message: 'O campo "email" é obrigatório' });
-  if (!password) return res.status(400).json({ message: 'O campo "password" é obrigatório' });
-};
+const validateLogin = (req, _res, next) => {
+  const { email, password } = req.body;
 
-const validateDataLogin = (res, email, password) => {
   const verifyRegex = /\S+@\S+\.\S+/;
   const isEmailValid = verifyRegex.test(email);
-  const isPasswordValid = password.length >= MIN_PASSWORD_CHARACTERS;
 
+  if (!email) return next({ message: 'O campo "email" é obrigatório', status: 400 });
   if (!isEmailValid) {
-    return res.status(400)
-    .json({ message: 'O "email" deve ter o formato "email@email.com"' });
+    return next({ message: 'O "email" deve ter o formato "email@email.com"', status: 400 });
   }
-  if (!isPasswordValid) {
-    return res.status(400)
-    .json({ message: 'O "password" deve ter pelo menos 6 caracteres' });
+  if (!password) return next({ message: 'O campo "password" é obrigatório', status: 400 });
+  if (password.length < MIN_PASSWORD_CHARACTERS) {
+    return next({ message: 'O "password" deve ter pelo menos 6 caracteres', status: 400 });
   }
+
+  next();
 };
 
 module.exports = {
   validateLogin,
-  validateDataLogin,
 };

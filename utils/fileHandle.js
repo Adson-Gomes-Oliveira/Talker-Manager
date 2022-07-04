@@ -11,6 +11,13 @@ const readFile = async (fileToRead) => {
   }
 };
 
+const writeFile = async (fileToAppend, content) => {
+  await fs.appendFile(fileToAppend, content, { flag: 'w' }, (err) => {
+    if (err) throw err;
+  });
+};
+
 module.exports = {
   readFile,
+  writeFile,
 };
