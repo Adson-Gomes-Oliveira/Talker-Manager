@@ -8,6 +8,20 @@ const getAll = async (_req, res) => {
   res.status(HTTP_OK_STATUS).json(database);
 };
 
+const getSearch = async (req, res) => {
+  const { q } = req.query;
+  
+  const database = await fileHandle.readFile(DATABASE_JSON_FILE);
+
+  if (!q) return res.status(HTTP_OK_STATUS).json(database);
+
+  const findPerson = database.filter((person) => (
+    person.name.toLowerCase().includes(q.toLowerCase())
+  ));
+
+  res.status(HTTP_OK_STATUS).json(findPerson);
+};
+
 const getById = async (req, res, next) => {
   const { id } = req.params;
 
@@ -78,6 +92,7 @@ const deletePerson = async (req, res, next) => {
 
 module.exports = {
   getAll,
+  getSearch,
   getById,
   addPerson,
   editPerson,

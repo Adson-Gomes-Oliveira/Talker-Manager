@@ -5,8 +5,12 @@ const validations = require('../validations/talkerValidations');
 const talkerRouter = express.Router();
 
 talkerRouter.get('/', services.getAll);
+
+talkerRouter.get('/search',
+validations.verifyToken, 
+services.getSearch);
+
 talkerRouter.get('/:id', services.getById);
-talkerRouter.get('/search');
 
 talkerRouter.post('/',
 validations.verifyToken,
