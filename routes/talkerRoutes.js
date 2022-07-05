@@ -15,7 +15,13 @@ validations.verifyWatchedTalk,
 validations.verifyRateTalk,
 services.addPerson);
 
-talkerRouter.put('/:id');
+talkerRouter.put('/:id',
+validations.verifyToken,
+validations.verifyNewPersonData,
+validations.verifyWatchedTalk,
+validations.verifyRateTalk,
+services.editPerson);
+
 talkerRouter.delete('/:id');
 
 module.exports = {

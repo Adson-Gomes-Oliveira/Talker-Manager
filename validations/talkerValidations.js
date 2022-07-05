@@ -33,7 +33,9 @@ const verifyWatchedTalk = (req, _res, next) => {
 const verifyRateTalk = (req, _res, next) => {
   const { talk } = req.body;
 
-  if (!talk.rate) return next({ message: 'O campo "rate" é obrigatório', status: 400 });
+  if (talk.rate === undefined) {
+    return next({ message: 'O campo "rate" é obrigatório', status: 400 });
+  }
   if (!Number.isInteger(talk.rate)) {
     return next({ message: 'O campo "rate" deve ser um inteiro de 1 à 5', status: 400 });
   }
