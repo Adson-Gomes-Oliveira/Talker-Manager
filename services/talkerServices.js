@@ -61,9 +61,25 @@ const editPerson = async (req, res, next) => {
   res.status(HTTP_OK_STATUS).json(database[findByTalkerID]);
 };
 
+const deletePerson = async (req, res, next) => {
+  const { id } = req.params;
+
+  const database = await fileHandle.readFile(DATABASE_JSON_FILE);
+  const findByTalkerID = database.findIndex((talker) => talker.id === Number(id));
+  if (findByTalkerID === -1) {
+    return next({ message: 'Pessoa palestrante não encontrada', status: 404 });
+  }
+
+  database.splice(findByTalkerID, 1);
+
+  await fileHandle.writeFile(DATABASE_JSON_FILE, JSON.stringify(database));
+  res.status(204).end();
+};
+
 module.exports = {
   getAll,
   getById,
   addPerson,
   editPerson,
+  deletePerson,
 };

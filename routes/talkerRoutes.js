@@ -22,7 +22,9 @@ validations.verifyWatchedTalk,
 validations.verifyRateTalk,
 services.editPerson);
 
-talkerRouter.delete('/:id');
+talkerRouter.delete('/:id',
+validations.verifyToken, 
+services.deletePerson);
 
 module.exports = {
   talkerRouter,
